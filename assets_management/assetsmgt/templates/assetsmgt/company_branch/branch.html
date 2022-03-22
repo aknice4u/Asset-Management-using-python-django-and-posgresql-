@@ -1,0 +1,83 @@
+{% extends "assetsmgt/base.html" %}
+{% block content %}
+
+<div class="card-header pb-0">
+                             <h4>Organization Branches</h4>
+                             <p class="">{{success_msg}}</p>
+                            </div>
+                            <div class="card-body">
+                                <form class="separate-form" method="post" action="/add-branch">
+                                     {% csrf_token %}
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <h5 class="from-title mb-1 offset-md-2"></h5>
+                                        <br/>
+                                        <div class="row">
+                                            <input type="hidden" name="id" value="">
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 offset-md-2">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">Location</label>
+                                                    <input type="text" class="form-control" name="location" >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 offset-md-2">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">Address</label>
+                                                    <textarea class="form-control" name="address" ></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 offset-md-2">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">Phone</label>
+                                                    <input type="text" class="form-control" name="phone" >
+                                                </div>
+                                            </div>
+
+                                        <div class="form-group mb-0 col-md-12 offset-md-2">
+                                            <button class="btn btn-primary" type="button">reset</button>
+                                            <input class="btn btn-danger" type="submit">
+                                        </div>
+                                    </div>
+                                    </div>
+                                </form>
+                            </div>
+<hr/>
+<div class="table-responsive">
+                                    <table class="table table-styled mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Location</th>
+                                                <th>Address</th>
+                                                <th>Contact</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for list in branch_list %}
+                                            <tr>
+                                                <td>
+                                                    <div class="checkbox">
+                                                        <input id="checkbox55" type="checkbox">
+                                                        <label for="checkbox55"></label>
+                                                    </div>
+                                                </td>
+                                                <td>{{list.location}}</td>
+                                                <td>{{list.address}}</td>
+                                                <td>{{list.contact}}</td>
+                                                <td class="relative">
+
+                                                <a href="{% url 'update-department' list.id %}" class="mb-0 badge badge-primary"><i class="far fa-edit mr-2 "></i>Edit</a>
+
+                                                <a href="{% url 'delete-department' list.id %}" class="mb-0 badge badge-primary"><i class="far fa-trash-alt mr-2 "></i>Delete</a>
+
+                                             </td>
+                                            </tr>
+                                         {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+{% endblock content %}

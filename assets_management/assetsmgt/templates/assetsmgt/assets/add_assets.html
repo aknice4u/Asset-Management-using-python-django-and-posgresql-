@@ -1,0 +1,132 @@
+{% extends "assetsmgt/base.html" %}
+{% block content %}
+
+<div class="card-header pb-0">
+                                <h4>Add Asset</h4>
+                             <p class="">{{success_msg}}</p>
+                            </div>
+                            <div class="card-body">
+                                <form class="separate-form" method="post" action="/add-asset" enctype="multipart/form-data">
+                                     {% csrf_token %}
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <h5 class="from-title mb-1 offset-md-2"></h5>
+                                        <br/>
+                                        <div class="row">
+                                            <input type="hidden" name="id" value="{{category_single.id}}">
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                                <div class="form-group">
+                                                    <label for="member-name" class="col-form-label">Asset Name</label>
+                                                    <input class="form-control" name="assetname" type="text" value="{{category_single.category_name}}" id="member-name">
+                                                </div>
+                                            </div>
+                                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 ">
+                                                <div class="form-group">
+                                                    <label for="member-name" class="col-form-label">Year Purchased</label>
+                                                    <input class="form-control" name="year_purchased" type="text" value="{{category_single.category_name}}" id="year">
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                                <div class="form-group">
+
+                                                    <label class="col-form-label">Category</label>
+                                                    <select class="form-control" name="category_name" id="cat">
+                                                        <option>Select</option>
+                                                        {% for list in category_list %}
+                                                        <option value="{{list.id}}" {% if list.id == brandid %} selected {% endif %}>{{list.category_name}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                                <div class="form-group">
+
+                                                    <label class="col-form-label">Brand</label>
+                                                    <select class="form-control" name="brand_name" id="brand">
+                                                        <option>Select</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                             <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                                <div class="form-group">
+                                                    <label for="member-name" class="col-form-label">Amount Purchased</label>
+                                                    <input class="form-control" name="amount_purchased" type="text" value="{{category_single.category_name}}" id="amount">
+                                                </div>
+                                             </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                                <div class="form-group">
+                                                    <label for="member-name" class="col-form-label">Current Value</label>
+                                                    <input class="form-control" name="current_value" type="text" value="{{category_single.category_name}}" id="current_value">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                                <div class="form-group">
+                                                    <label for="member-name" class="col-form-label">Quantity</label>
+                                                    <input class="form-control" name="quantity" type="text" id="quantity">
+                                                </div>
+                                             </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                                <div class="form-group">
+                                                    <label for="member-name" class="col-form-label">Warranty End Date</label>
+                                                    <input class="form-control" name="warranty_date" type="text" value="{{category_single.category_name}}" id="warranty">
+                                                </div>
+                                             </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                                <div class="form-group">
+                                                    <label for="member-name" class="col-form-label">Condition of Asset</label>
+                                                    <input class="form-control" name="condition" type="text"id="condition">
+                                                </div>
+                                             </div>
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                                <div class="form-group">
+                                                    <label for="member-name" class="col-form-label">Image of Asset</label>
+                                                    <input name="asset_image" type="file" id="file">
+                                                </div>
+                                             </div>
+
+                                        <div class="form-group mb-0 col-md-12">
+                                            <button class="btn btn-primary" type="button">reset</button>
+                                            <input class="btn btn-danger" type="submit">
+                                        </div>
+                                    </div>
+                                    </div>
+                                </form>
+
+
+
+                            </div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script>
+
+
+    $(document).ready(function()
+    {
+    $("#cat").change(function(){
+      var id = $(this).val();
+
+      $.ajax({
+    url: '/fetch-brands',
+
+    type: "POST",
+    data: {category_id: id, csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()},
+    success: function(data){
+    console.log(data)
+     $('#brand').empty();
+     $.each(data, function(index, obj){
+
+
+     $('#brand').append('<option value="'+obj.id+'" selected>'+obj.brand_name+'</option>');
+
+    });
+      }
+    });
+
+    });
+    })
+</script>
+
+{% endblock %}

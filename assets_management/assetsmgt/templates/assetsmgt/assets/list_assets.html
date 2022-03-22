@@ -1,0 +1,64 @@
+{% extends "assetsmgt/base.html" %}
+{% block content %}
+
+<div class="card-header pb-0">
+                                <h4>All Assets</h4>
+                             <p class="">{{success_msg}}</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-styled mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Asset Name</th>
+                                                <th>Condition</th>
+                                                <th>Year Purchased</th>
+                                                <th>Category</th>
+                                                <th>Brand</th>
+                                                <th>Amount Purchased</th>
+                                                <th>Current Value</th>
+                                                <th>Quantity</th>
+                                                <th>Warranty Date</th>
+                                                <th>Picture</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for list in assets_list %}
+                                            <tr>
+                                                <td>
+                                                    <div class="checkbox">
+                                                        <input id="checkbox55" type="checkbox">
+                                                        <label for="checkbox55"></label>
+                                                    </div>
+                                                </td>
+                                                <td>{{list.assetname}}</td>
+                                                <td>{{list.condition}}</td>
+                                                <td>{{list.year_purchased}}</td>
+                                                <td>{{list.category.category_name}}</td>
+                                                <td>{{list.brand.brand_name}}</td>
+                                                <td>{{list.amount_purchased}}</td>
+                                                <td>{{list.current_value_amount}}</td>
+                                                <td>{{list.quantity}}</td>
+                                                <td>{{list.warranty_end_date}}</td>
+
+                                                <td><img src="{{ MEDIA_URL }}{{list.photo_path}}"></td>
+                                                <td class="relative">
+
+                                                <a href="{% url 'edit_brand' list.id %}" class="btn btns-success"><i class="far fa-edit mr-2 "></i>Edit</a>
+
+                                                <a href="{% url 'delete_brand' list.id %}" class="btn btns-danger"><i class="far fa-trash-alt mr-2 "></i>Delete</a>
+
+                                                </td>
+
+                                            </tr>
+                                         {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends "assetsmgt/base.html" %}
+{% block content %}
+
+<div class="card-header pb-0">
+                                <h4>Update Brand</h4>
+                             <p class="">{{success_msg}}</p>
+                            </div>
+                            <div class="card-body">
+                                <form class="separate-form" method="post" action="/update-brand">
+                                     {% csrf_token %}
+                                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <h5 class="from-title mb-1 offset-md-2"></h5>
+                                        <br/>
+                                        <div class="row">
+                                            <input type="hidden" name="id" value="{{category_single.id}}">
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 offset-md-2">
+                                                <div class="form-group">
+                                                    <input type="hidden" name="id" value="{{brand_single.id}}" />
+                                                    <label class="col-form-label">Category</label>
+                                                    <select class="form-control" name="category_name" id="cat-name">
+                                                        <option>Select</option>
+                                                        {% for list in category_list %}
+                                                        <option value="{{list.id}}" {% if list.id == brandid %} selected {% endif %}>{{list.category_name}}</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 offset-md-2">
+                                                <div class="form-group">
+                                                    <label class="col-form-label">Brand</label>
+                                                    <input class="form-control" value="{{brand_single.brand_name}}" name="brand_name" type="text" value="" id="brand-name">
+                                                </div>
+                                            </div>
+
+                                        <div class="form-group mb-0 col-md-12 offset-md-2">
+                                            <button class="btn btn-primary" type="button">reset</button>
+                                            <input class="btn btn-danger" type="submit" value="Update">
+                                        </div>
+                                    </div>
+                                    </div>
+                                </form>
+                            </div>
+<hr/>
+
+
+{% endblock content %}
